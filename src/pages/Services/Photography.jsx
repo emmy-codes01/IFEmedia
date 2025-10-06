@@ -116,12 +116,12 @@ const Photography = () => {
               Photography that{" "}
               <span className="relative inline-block">
                 <span className="relative z-10 text-red-500">Speaks</span>
-                <motion.span
+                {/* <motion.span
                   initial={{ width: 0 }}
                   animate={{ width: "100%" }}
                   transition={{ duration: 0.8, delay: 1 }}
-                  className="absolute bottom-2 left-0 h-3 bg-red-500/30 -z-10"
-                ></motion.span>
+                  className="absolute bottom-0 left-0 h-3 bg-red-500/30 -z-10"
+                ></motion.span> */}
               </span>
             </motion.h1>
 
@@ -131,7 +131,7 @@ const Photography = () => {
               transition={{ duration: 0.8, delay: 0.5 }}
               className="text-xl sm:text-2xl text-gray-300 font-light max-w-3xl mx-auto mb-12 leading-relaxed"
             >
-              We capture more than moments—we{" "}
+              We capture more than moments, we{" "}
               <span className="text-red-400 font-medium">immortalize emotions</span>.
             </motion.p>
 

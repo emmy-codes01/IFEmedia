@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import ScrollReveal from "scrollreveal";
-import { Camera, Video, Calendar, ArrowRight, Star, Mail, MessageCircle, X } from "lucide-react";
+import {
+  Camera,
+  Video,
+  Calendar,
+  ArrowRight,
+  Star,
+  Mail,
+  MessageCircle,
+  X,
+} from "lucide-react";
 import logo from "../assets/images/logo.png";
 import bg from "../assets/images/Camera-mockup.jpg";
 import i1 from "../assets/images/Display/i1.png";
@@ -304,6 +313,8 @@ const Home = () => {
                   src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover rounded-2xl transition-transform duration-700 group-hover:scale-110"
+                  loading="eager" // Ensure logo is eagerly loaded
+                  onLoad={(e) => e.target.classList.remove("blur-xs")}
                 />
 
                 {/* Gradient overlay */}
@@ -437,7 +448,13 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="flex justify-center items-center py-5">
-              <img src={logo} alt="IFEmedia logo" className="w-30" />
+              <img
+                src={logo}
+                alt="IFEmedia logo"
+                className="w-30"
+                loading="eager" // Ensure logo is eagerly loaded
+                onLoad={(e) => e.target.classList.remove("blur-xs")}
+              />
             </div>
             <p className="text-gray-400 text-lg">
               Premium media production • Nigeria
@@ -495,8 +512,12 @@ const Home = () => {
                     <Mail className="w-6 h-6 text-white" />
                   </div>
                   <div className="flex-1 text-left">
-                    <div className="text-white font-semibold text-lg">Email Us</div>
-                    <div className="text-red-100 text-sm">IFEmedia.ng@gmail.com</div>
+                    <div className="text-white font-semibold text-lg">
+                      Email Us
+                    </div>
+                    <div className="text-red-100 text-sm">
+                      IFEmedia.ng@gmail.com
+                    </div>
                   </div>
                   <ArrowRight className="w-5 h-5 text-white transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
@@ -510,8 +531,12 @@ const Home = () => {
                     <MessageCircle className="w-6 h-6 text-white" />
                   </div>
                   <div className="flex-1 text-left">
-                    <div className="text-white font-semibold text-lg">WhatsApp</div>
-                    <div className="text-green-100 text-sm">+234 810 672 8018</div>
+                    <div className="text-white font-semibold text-lg">
+                      WhatsApp
+                    </div>
+                    <div className="text-green-100 text-sm">
+                      +234 810 672 8018
+                    </div>
                   </div>
                   <ArrowRight className="w-5 h-5 text-white transition-transform duration-300 group-hover:translate-x-1" />
                 </button>

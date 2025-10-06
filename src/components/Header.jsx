@@ -39,12 +39,11 @@ const Header = () => {
       dropdown: [
         { name: "Photography", path: "/services/photography" },
         { name: "Videography", path: "/services/videography" },
-        { name: "Events", path: "#events" },
       ],
     },
     { name: "Portfolio", path: "/portfolio" },
     { name: "Testimonials", path: "/testimonials" },
-    { name: "Contact", path: "#contact" },
+    { name: "Contact", path: "/contact" },
   ];
 
   const handleNavClick = (path) => {
@@ -87,6 +86,8 @@ const Header = () => {
                     e.target.style.display = "none";
                     e.target.nextSibling.style.display = "block";
                   }}
+                  loading="eager" // Ensure logo is eagerly loaded
+                  onLoad={(e) => e.target.classList.remove('blur-xs')}
                 />
                 <div
                   className="hidden text-2xl font-thin tracking-wider text-white"

@@ -9,6 +9,8 @@ import Photography from './pages/Services/Photography'
 import Videography from './pages/Services/Videography'
 import Testimonials from "./pages/Testimonials";
 
+
+
 const App = () => {
   return (
     <Router>
@@ -23,6 +25,7 @@ const App = () => {
         <Route path="/services/videography" element={<Videography />} />
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </Router>
   );

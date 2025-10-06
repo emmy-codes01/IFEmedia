@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, Mail, MessageCircle, Send, MapPin } from 'lucide-react';
+import { Phone, Mail, MessageCircle, Send, MapPin, X, ArrowRight } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -10,6 +10,7 @@ export default function Contact() {
     service: '',
     message: ''
   });
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,6 +20,16 @@ export default function Contact() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleEmailClick = () => {
+    window.location.href = "mailto:IFEmedia.ng@gmail.com";
+    setIsBottomSheetOpen(false);
+  };
+
+  const handleWhatsAppClick = () => {
+    window.open("https://wa.me/2348106728018", "_blank");
+    setIsBottomSheetOpen(false);
   };
 
   const containerVariants = {
@@ -47,49 +58,28 @@ export default function Contact() {
     {
       icon: Phone,
       title: 'Call Us',
-      detail: '+234 XXX XXX XXXX',
-      link: 'tel:+234XXXXXXXXXX',
+      detail: '+234 810 672 8018',
+      action: 'tel:+2348106728018',
       color: 'from-red-600 to-red-800'
     },
     {
       icon: Mail,
       title: 'Email Us',
-      detail: 'hello@ifemedia.com',
-      link: 'mailto:hello@ifemedia.com',
+      detail: 'IFEmedia.ng@gmail.com',
+      action: 'mailto:IFEmedia.ng@gmail.com',
       color: 'from-red-700 to-rose-900'
     },
     {
       icon: MessageCircle,
       title: 'WhatsApp',
       detail: 'Chat with us',
-      link: 'https://wa.me/234XXXXXXXXXX',
+      action: 'https://wa.me/2348106728018',
       color: 'from-red-800 to-red-950'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-6 py-20">
-        {/* Red Vignette Effect */}
-        <div className="absolute inset-0 bg-gradient-radial from-red-950/30 via-black to-black"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-900/20 via-transparent to-transparent"></div>
-        
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="relative z-10 text-center max-w-4xl mx-auto"
-        >
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-red-100 to-red-200 bg-clip-text text-transparent">
-            Let's Create Something Timeless
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 font-light">
-            Reach out today and let's capture your story in the most cinematic way.
-          </p>
-        </motion.div>
-      </section>
-
+    <div className="min-h-screen bg-black text-white overflow-hidden py-16">
       {/* Contact Form Section */}
       <section className="relative px-6 py-20 max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-12">
@@ -191,7 +181,7 @@ export default function Contact() {
             {contactOptions.map((option, index) => (
               <motion.a
                 key={index}
-                href={option.link}
+                href={option.action}
                 variants={itemVariants}
                 whileHover={{ scale: 1.05, y: -5 }}
                 className="block bg-gradient-to-br from-zinc-900 to-zinc-950 border border-zinc-800 rounded-xl p-6 transition-all duration-300 hover:border-red-600 hover:shadow-lg hover:shadow-red-900/30 group"
@@ -227,28 +217,6 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Google Map Embed */}
-      <motion.section
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="px-6 py-20 max-w-6xl mx-auto"
-      >
-        <div className="rounded-xl overflow-hidden shadow-2xl">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126846.01179817388!2d3.2441726!3d6.6018154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b9228fa2a3999%3A0xd7a8324bddbae603!2sIkeja%2C%20Lagos!5e0!3m2!1sen!2sng!4v1234567890"
-            width="100%"
-            height="450"
-            style={{ border: 0, filter: 'grayscale(100%) contrast(1.2)' }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="IFEMedia Location"
-          ></iframe>
-        </div>
-      </motion.section>
-
       {/* CTA Footer */}
       <motion.section
         initial={{ opacity: 0 }}
@@ -265,6 +233,7 @@ export default function Contact() {
           </h2>
           
           <motion.button
+            onClick={() => setIsBottomSheetOpen(true)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="bg-gradient-to-r from-red-700 to-red-900 hover:from-red-600 hover:to-red-800 text-white font-bold py-5 px-12 rounded-xl text-lg transition-all duration-300 shadow-2xl hover:shadow-red-900/50"
@@ -273,6 +242,83 @@ export default function Contact() {
           </motion.button>
         </div>
       </motion.section>
+
+      {/* Bottom Sheet Overlay */}
+      {isBottomSheetOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end"
+          onClick={() => setIsBottomSheetOpen(false)}
+        >
+          {/* Bottom Sheet */}
+          <motion.div
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
+            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            className="w-full bg-gradient-to-b from-gray-900 to-black rounded-t-3xl shadow-2xl border-t border-gray-800"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Handle Bar */}
+            <div className="flex justify-center pt-4 pb-2">
+              <div className="w-12 h-1.5 bg-gray-600 rounded-full"></div>
+            </div>
+
+            {/* Close Button */}
+            <button
+              onClick={() => setIsBottomSheetOpen(false)}
+              className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors duration-200"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Content */}
+            <div className="px-6 py-8 pb-12">
+              <h3 className="text-2xl font-semibold text-center mb-2">
+                Get in <span className="text-red-500">Touch</span>
+              </h3>
+              <p className="text-gray-400 text-center mb-8 text-sm">
+                Choose your preferred way to reach us
+              </p>
+
+              {/* Contact Options */}
+              <div className="space-y-4 max-w-md mx-auto">
+                {/* Email Option */}
+                <button
+                  onClick={handleEmailClick}
+                  className="w-full group flex items-center space-x-4 p-5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-red-500/25"
+                >
+                  <div className="flex-shrink-0 w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                    <Mail className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1 text-left">
+                    <div className="text-white font-semibold text-lg">Email Us</div>
+                    <div className="text-red-100 text-sm">IFEmedia.ng@gmail.com</div>
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-white transition-transform duration-300 group-hover:translate-x-1" />
+                </button>
+
+                {/* WhatsApp Option */}
+                <button
+                  onClick={handleWhatsAppClick}
+                  className="w-full group flex items-center space-x-4 p-5 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-green-500/25"
+                >
+                  <div className="flex-shrink-0 w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                    <MessageCircle className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1 text-left">
+                    <div className="text-white font-semibold text-lg">WhatsApp</div>
+                    <div className="text-green-100 text-sm">+234 810 672 8018</div>
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-white transition-transform duration-300 group-hover:translate-x-1" />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 }
