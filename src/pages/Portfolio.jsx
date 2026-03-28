@@ -23,7 +23,7 @@ import s9 from "../assets/images/Display/stablecoin/9.png";
 import s10 from "../assets/images/Display/stablecoin/10.png";
 
 // technova images
-import t1 from "../assets/images/Display/technova/t1.jpg"
+import t1 from "../assets/images/Display/technova/t1.JPG"
 
 // nige images
 import n1 from "../assets/images/Display/Nige/n1.png"
