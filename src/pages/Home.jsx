@@ -11,7 +11,7 @@ import i4   from "../assets/images/Display/i4.png";
 import i5   from "../assets/images/Display/i5.png";
 import i6   from "../assets/images/Display/i6.png";
 import i7   from "../assets/images/Display/i7.png";
-import t1   from "../assets/images/Display/technova/t1.jpg";
+import t1   from "../assets/images/Display/technova/t1.JPG";
 import bf   from "../assets/images/brands/bf.JPG"
 
 // ── data ─────────────────────────────────────────────────────────────────────
