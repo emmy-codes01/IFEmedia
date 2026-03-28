@@ -33,14 +33,14 @@ const Header = () => {
   const navigationLinks = [
     { name: "Home", path: "/" }, // 👈 use paths for pages
     { name: "About", path: "/about" },
-    {
-      name: "Services",
-      path: "#services", // still scrolls within the same page
-      dropdown: [
-        { name: "Photography", path: "/services/photography" },
-        { name: "Videography", path: "/services/videography" },
-      ],
-    },
+    // {
+    //   name: "Services",
+    //   path: "#services", 
+    //   dropdown: [
+    //     { name: "Photography", path: "/services/photography" },
+    //     { name: "Videography", path: "/services/videography" },
+    //   ],
+    // },
     { name: "Portfolio", path: "/portfolio" },
     { name: "Testimonials", path: "/testimonials" },
     { name: "Contact", path: "/contact" },

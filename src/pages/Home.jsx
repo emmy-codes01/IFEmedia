@@ -1,551 +1,544 @@
 import React, { useState, useEffect } from "react";
-import ScrollReveal from "scrollreveal";
-import {
-  Camera,
-  Video,
-  Calendar,
-  ArrowRight,
-  Star,
-  Mail,
-  MessageCircle,
-  X,
-} from "lucide-react";
-import logo from "../assets/images/logo.png";
-import bg from "../assets/images/Camera-mockup.jpg";
-import i1 from "../assets/images/Display/i1.png";
-import i2 from "../assets/images/Display/i2.png";
-import i3 from "../assets/images/Display/i3.png";
-import i4 from "../assets/images/Display/i4.png";
-import i5 from "../assets/images/Display/i5.png";
-import i6 from "../assets/images/Display/i6.png";
-import i7 from "../assets/images/Display/i7.png";
+import { Camera, Video, Calendar, ArrowRight, Star, Mail, MessageCircle, X, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import logo from "../assets/images/logo.png";
+import bg   from "../assets/images/Camera-mockup.jpg";
+import i1   from "../assets/images/Display/i1.png";
+import i2   from "../assets/images/Display/i2.png";
+import i3   from "../assets/images/Display/i3.png";
+import i4   from "../assets/images/Display/i4.png";
+import i5   from "../assets/images/Display/i5.png";
+import i6   from "../assets/images/Display/i6.png";
+import i7   from "../assets/images/Display/i7.png";
+import t1   from "../assets/images/Display/technova/t1.jpg";
+import bf   from "../assets/images/brands/bf.JPG"
 
+// ── data ─────────────────────────────────────────────────────────────────────
+const services = [
+  { icon: Camera,   img: i5, title: "Photography",    sub: "Bold. Timeless. Refined.",                         body: "Every frame captures more than a moment — it preserves emotion, tells a story, and creates lasting memories with artistic precision." },
+  { icon: Video,    img: i6, title: "Videography",    sub: "Cinema-quality storytelling.",                     body: "From concept to final cut, we create cinematic experiences that captivate, inspire, and leave lasting impressions." },
+  { icon: Calendar, img: i7, title: "Event Coverage", sub: "Your moments, captured in real-time.",             body: "Comprehensive event documentation that preserves every significant moment with professional excellence and creative vision." },
+];
+
+const portfolio = [
+   { image: bf, title: "BLOCKFEST AFRICA",         desc: "Superbowl of Web3" },
+  { image: t1, title: "TECHNOVA",         desc: "Web3 Conference Event" },
+  { image: i2, title: "Stablecoins Summit", desc: "Africa's first stablecoin conference" },
+  { image: i3, title: "Stablecoins Summit", desc: "Africa's first stablecoin conference" },
+  { image: i1, title: "NIGE",             desc: "Web3 Invasion event in Lagos" },
+  { image: i4, title: "Stablecoins Summit", desc: "Africa's first stablecoin conference" },
+];
+
+const testimonials = [
+  { quote: "IFEMedia transformed our event into a masterpiece — the quality was beyond our imagination.", author: "Adunni Okafor",  role: "Event Planner" },
+  { quote: "Their cinematic vision brought our brand story to life in ways we never expected.",           author: "Kemi Adeleke",   role: "Brand Director" },
+  { quote: "Professional excellence meets artistic vision. IFEMedia delivers nothing short of perfection.", author: "Tunde Bakare", role: "CEO, Luxury Events" },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
 const Home = () => {
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-
-  const testimonials = [
-    {
-      quote:
-        "IFEMedia transformed our event into a masterpiece, the quality was beyond our imagination.",
-      author: "Adunni Okafor",
-      role: "Event Planner",
-    },
-    {
-      quote:
-        "Their attention to detail and cinematic vision brought our story to life in ways we never expected.",
-      author: "Kemi Adeleke",
-      role: "Brand Director",
-    },
-    {
-      quote:
-        "Professional excellence meets artistic vision. IFEMedia delivers nothing short of perfection.",
-      author: "Tunde Bakare",
-      role: "CEO, Luxury Events",
-    },
-  ];
-
-  const portfolioProjects = [
-    {
-      image: i1,
-      title: "NIGE",
-      description: "Web3 Invasion event in Lagos",
-    },
-    {
-      image: i2,
-      title: "Stablecoins Summit",
-      description: "Africa's first stablecoin conference",
-    },
-    {
-      image: i3,
-      title: "Stablecoins Summit",
-      description: "Africa's first stablecoin conference",
-    },
-    {
-      image: i4,
-      title: "Stablecoins Summit",
-      description: "Africa's first stablecoin conference",
-    },
-  ];
+  const [testimonialIdx, setTestimonialIdx]   = useState(0);
+  const [sheetOpen,      setSheetOpen]         = useState(false);
+  const [hoveredService, setHoveredService]    = useState(null);
+  const [hoveredProject, setHoveredProject]    = useState(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [testimonials.length]);
-
-  const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  // SCROLL REVEAL
-
-  useEffect(() => {
-    // ScrollReveal setup
-    ScrollReveal().reveal(".reveal", {
-      distance: "50px",
-      origin: "bottom",
-      duration: 1000,
-      delay: 200,
-      easing: "ease-in-out",
-      opacity: 0,
-      reset: false, // Optional: Reset animation on scroll back
-      scale: 0.8, // Optional: You can scale the element
-    });
-
-    ScrollReveal().reveal(".reveal1", {
-      origin: "left",
-      distance: "800px",
-      duration: 1200,
-      delay: 200,
-      reset: false,
-    });
-    ScrollReveal().reveal(".reveal2", {
-      origin: "right",
-      distance: "800px",
-      duration: 1200,
-      delay: 200,
-      reset: false,
-    });
+    const t = setInterval(() => setTestimonialIdx(p => (p + 1) % testimonials.length), 5000);
+    return () => clearInterval(t);
   }, []);
 
-  const handleEmailClick = () => {
-    window.location.href = "mailto:IFEmedia.ng@gmail.com";
-    setIsBottomSheetOpen(false);
-  };
-
-  const handleWhatsAppClick = () => {
-    window.open("https://wa.me/2348106728018", "_blank");
-    setIsBottomSheetOpen(false);
-  };
+  const handleEmail = () => { window.location.href = "mailto:IFEmedia.ng@gmail.com"; setSheetOpen(false); };
+  const handleWA    = () => { window.open("https://wa.me/2348106728018", "_blank");   setSheetOpen(false); };
 
   return (
-    <div className="bg-black text-white overflow-x-hidden montserrat">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <div
-            className="w-full h-full bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url(${bg})`,
-              backgroundAttachment: "fixed",
-            }}
-          >
-            {/* Responsive overlay for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30"></div>
-          </div>
-        </div>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+        *, *::before, *::after { box-sizing: border-box; }
 
-        {/* Hero Content */}
-        <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-          <div className="space-y-8 animate-fade-in">
-            <h1 className="text-5xl sm:text-6xl lg:text-6xl font-semibold leading-tight lg:flex gap-3 text-center justify-center">
-              <span className="block">Capturing</span>
-              <span className="block text-red-500 font-light italic">
-                Moments.
-              </span>
-              <span className="block">Creating</span>
-              <span className="block text-red-500 font-light italic">
-                Legacies.
-              </span>
+        .hm-root { min-height: 100vh; background: #0d0d0d; color: #fff; font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+
+        .hm-divider { height: 1px; background: rgba(255,255,255,0.07); max-width: 1200px; margin: 0 auto; }
+        .hm-section { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
+
+        .hm-label {
+          display: block; color: #f11717; font-size: 10px; font-weight: 700;
+          letter-spacing: 0.32em; text-transform: uppercase; margin-bottom: 12px;
+        }
+
+        /* services grid */
+        .hm-services {
+          display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 44px;
+        }
+        @media (max-width: 860px) { .hm-services { grid-template-columns: 1fr; } }
+
+        /* portfolio grid */
+        .hm-portfolio {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 12px;
+          margin-top: 44px;
+        }
+        /* first item spans 2 cols to make a nice editorial layout */
+        .hm-portfolio > *:first-child { grid-column: span 2; }
+
+        @media (max-width: 780px) {
+          .hm-portfolio { grid-template-columns: repeat(2, 1fr); }
+          .hm-portfolio > *:first-child { grid-column: span 2; }
+        }
+        @media (max-width: 480px) {
+          .hm-portfolio { grid-template-columns: 1fr; }
+          .hm-portfolio > *:first-child { grid-column: span 1; }
+        }
+
+        /* footer */
+        .hm-footer { border-top: 1px solid rgba(255,255,255,0.07); padding: 52px 20px; text-align: center; }
+      `}</style>
+
+      <div className="hm-root">
+
+        {/* ── HERO ──────────────────────────────────────────────────────── */}
+        <section style={{ position: "relative", minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          {/* BG image */}
+          <div style={{
+            position: "absolute", inset: 0,
+            backgroundImage: `url(${bg})`,
+            backgroundSize: "cover", backgroundPosition: "center",
+            filter: "brightness(0.3)",
+          }} />
+          {/* gradient vignette */}
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, #0d0d0d 0%, transparent 50%)" }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(13,13,13,0.6) 0%, transparent 60%)" }} />
+
+          <motion.div
+            initial={{ opacity: 0, y: 44 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            style={{ position: "relative", zIndex: 1, textAlign: "center", padding: "0 20px", maxWidth: 800, margin: "0 auto" }}
+          >
+            <span className="hm-label" style={{ textAlign: "center" }}>IFEMedia</span>
+
+            <h1 style={{
+              fontSize: "clamp(40px, 7vw, 84px)",
+              fontWeight: 900, lineHeight: 1.02,
+              letterSpacing: "-0.03em", marginBottom: 24,
+            }}>
+              Capturing{" "}
+              <span style={{ color: "#f11717", fontStyle: "italic", fontWeight: 300 }}>Moments.</span>
+              <br />
+              Creating{" "}
+              <span style={{ color: "#f11717", fontStyle: "italic", fontWeight: 300 }}>Legacies.</span>
             </h1>
 
-            <div className="max-w-4xl mx-auto space-y-6">
-              <p className="text-sm sm:text-2xl font-light text-gray-300 leading-relaxed tracking-wide">
-                Nigeria's premium media company creating timeless photography,
-                cinematic videography, and unforgettable event coverage that
-                turn fleeting moments into powerful stories.
-              </p>
-            </div>
-
-            <div className="pt-8">
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="group relative rounded-2xl inline-flex items-center space-x-3 px-12 py-4 bg-red-600 hover:bg-red-700 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-red-500/25 cursor-pointer"
-              >
-                <span className="text-sm font-medium tracking-wide">
-                  Book Your Experience
-                </span>
-                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white border-opacity-30 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white bg-opacity-50 rounded-full mt-2"></div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services Overview */}
-      <section
-        id="services"
-        className="py-24 bg-gradient-to-br from-black via-red-950 to-black"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal1">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-semibold mb-6">
-              Our <span className="text-red-500">Craft</span>
-            </h2>
-            <p className="text-sm text-gray-400 max-w-3xl mx-auto">
-              Three pillars of excellence that define our approach to visual
-              storytelling
+            <p style={{ fontSize: "clamp(13px, 1.8vw, 16px)", color: "rgba(255,255,255,0.45)", lineHeight: 1.8, maxWidth: 560, margin: "0 auto 36px", fontWeight: 400 }}>
+              Nigeria's premium media company — timeless photography, cinematic videography, and unforgettable event coverage.
             </p>
+
+            <motion.button
+              onClick={() => setSheetOpen(true)}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 10,
+                background: "#f11717", color: "#fff", border: "none", cursor: "pointer",
+                padding: "15px 36px", borderRadius: 10,
+                fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase",
+                fontFamily: "Montserrat, sans-serif",
+              }}
+            >
+              Book Your Experience
+              <ArrowRight size={14} />
+            </motion.button>
+          </motion.div>
+
+          {/* scroll indicator */}
+          <div style={{ position: "absolute", bottom: 32, left: "50%", transform: "translateX(-50%)" }}>
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              style={{ width: 24, height: 40, border: "1.5px solid rgba(255,255,255,0.2)", borderRadius: 99, display: "flex", justifyContent: "center", paddingTop: 6 }}
+            >
+              <motion.div
+                animate={{ opacity: [1, 0, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                style={{ width: 4, height: 10, background: "#f11717", borderRadius: 99 }}
+              />
+            </motion.div>
           </div>
+        </section>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Photography */}
-            <div
-              className="group rounded-2xl relative overflow-hidden h-[480px] flex items-end transform transition-all duration-500 hover:-translate-y-3 hover:scale-105 hover:shadow-2xl hover:shadow-red-500/20"
-              style={{
-                backgroundImage: `url(${i5})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            >
-              {/* Overlay gradients */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
-              <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-              {/* Content */}
-              <div className="relative z-10 p-8 text-white">
-                <Camera className="w-14 h-14 text-red-500 mb-4 group-hover:animate-bounce" />
-                <h3 className="text-3xl font-light tracking-wide mb-2">
-                  Photography
-                </h3>
-                <p className="text-red-400 text-base font-medium mb-4">
-                  Bold. Timeless. Refined.
-                </p>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  Every frame captures more than a moment, it preserves emotion,
-                  tells a story, and creates lasting memories with artistic
-                  precision.
-                </p>
-              </div>
-            </div>
-
-            {/* Videography */}
-            <div
-              className="group rounded-2xl relative overflow-hidden h-[480px] flex items-end transform transition-all duration-500 hover:-translate-y-3 hover:scale-105 hover:shadow-2xl hover:shadow-red-500/20"
-              style={{
-                backgroundImage: `url(${i6})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
-              <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-              <div className="relative z-10 p-8 text-white">
-                <Video className="w-14 h-14 text-red-500 mb-4 group-hover:animate-bounce" />
-                <h3 className="text-3xl font-light tracking-wide mb-2">
-                  Videography
-                </h3>
-                <p className="text-red-400 text-base font-medium mb-4">
-                  Cinema-quality storytelling beyond the frame.
-                </p>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  From concept to final cut, we create cinematic experiences
-                  that captivate, inspire, and leave lasting impressions.
-                </p>
-              </div>
-            </div>
-
-            {/* Event Coverage */}
-            <div
-              className="group rounded-2xl relative overflow-hidden h-[480px] flex items-end transform transition-all duration-500 hover:-translate-y-3 hover:scale-105 hover:shadow-2xl hover:shadow-red-500/20"
-              style={{
-                backgroundImage: `url(${i7})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent"></div>
-              <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-              <div className="relative z-10 p-8 text-white">
-                <Calendar className="w-14 h-14 text-red-500 mb-4 group-hover:animate-bounce" />
-                <h3 className="text-3xl font-light tracking-wide mb-2">
-                  Event Coverage
-                </h3>
-                <p className="text-red-400 text-base font-medium mb-4">
-                  Your moments, captured in real-time.
-                </p>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  Comprehensive event documentation that preserves every
-                  significant moment with professional excellence and creative
-                  vision.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Portfolio Highlights */}
-      <section id="portfolio" className="py-24 bg-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl tracking-wider mb-6">
-              Every{" "}
-              <span className="text-red-500 font-bold italic">frame.</span>{" "}
-              Every{" "}
-              <span className="text-red-500 font-semibold italic">detail.</span>{" "}
-              Every <span className="text-red-500 italic">story.</span>
+        {/* ── SERVICES ──────────────────────────────────────────────────── */}
+        <section className="hm-section">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="hm-label">What we do</span>
+            <h2 style={{ fontSize: "clamp(26px, 4vw, 50px)", fontWeight: 900, letterSpacing: "-0.02em" }}>
+              Our <span style={{ color: "#f11717" }}>Craft</span>
             </h2>
-          </div>
+          </motion.div>
 
-          {/* ONE grid only */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 reveal2">
-            {portfolioProjects.map((project, index) => (
-              <div
-                key={index}
-                className="group relative overflow-hidden aspect-square"
-              >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover rounded-2xl transition-transform duration-700 group-hover:scale-110"
-                  loading="eager" // Ensure logo is eagerly loaded
-                  onLoad={(e) => e.target.classList.remove("blur-xs")}
-                />
+          <div className="hm-services">
+            {services.map((s, i) => {
+              const Icon = s.icon;
+              const isHov = hoveredService === i;
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  onMouseEnter={() => setHoveredService(i)}
+                  onMouseLeave={() => setHoveredService(null)}
+                  style={{
+                    position: "relative", borderRadius: 16, overflow: "hidden",
+                    height: 400, cursor: "default",
+                  }}
+                >
+                  <img src={s.img} alt={s.title} style={{
+                    position: "absolute", inset: 0, width: "100%", height: "100%",
+                    objectFit: "cover", display: "block",
+                    transform: isHov ? "scale(1.06)" : "scale(1)",
+                    transition: "transform 0.55s ease",
+                    filter: "brightness(0.4)",
+                  }} />
+                  <div style={{
+                    position: "absolute", inset: 0,
+                    background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%)",
+                  }} />
+                  {/* Red tint on hover */}
+                  <div style={{
+                    position: "absolute", inset: 0,
+                    background: "rgba(239,68,68,0.08)",
+                    opacity: isHov ? 1 : 0,
+                    transition: "opacity 0.35s",
+                    border: `1px solid ${isHov ? "rgba(239,68,68,0.3)" : "transparent"}`,
+                    borderRadius: 16,
+                  }} />
 
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                {/* Red hover overlay */}
-                <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-500"></div>
-
-                {/* Text on hover */}
-                <div className="absolute bottom-0 left-0 right-0 px-4 pb-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <h3 className="text-lg font-semibold">{project.title}</h3>
-                  <p className="text-sm text-gray-300">{project.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Link to="/portfolio">
-              <button className="group inline-flex items-center space-x-3 px-10 py-3 border-2 rounded-2xl border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-all duration-300 transform hover:scale-105 cursor-pointer">
-                <span className="font-medium tracking-wide text-sm">
-                  Explore Portfolio
-                </span>
-                <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Preview */}
-      <section className="py-24 bg-gradient-to-b from-black to-gray-900">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="mb-16">
-            <h2 className="text-4xl sm:text-5xl font-thin tracking-wider mb-8">
-              Client <span className="text-red-500">Stories</span>
-            </h2>
-          </div>
-
-          <div className="relative">
-            <div className="overflow-hidden">
-              <div
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{
-                  transform: `translateX(-${currentTestimonial * 100}%)`,
-                }}
-              >
-                {testimonials.map((testimonial, index) => (
-                  <div key={index} className="w-full flex-shrink-0 px-8">
-                    <div className="max-w-3xl mx-auto">
-                      <div className="mb-8">
-                        <div className="flex justify-center mb-6">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              className="w-6 h-6 text-red-500 fill-current"
-                            />
-                          ))}
-                        </div>
-                        <blockquote className="text-2xl sm:text-3xl font-light italic text-gray-300 leading-relaxed mb-8">
-                          "{testimonial.quote}"
-                        </blockquote>
-                        <div>
-                          <cite className="text-xl font-medium text-white not-italic">
-                            {testimonial.author}
-                          </cite>
-                          <p className="text-red-400 text-lg mt-2">
-                            {testimonial.role}
-                          </p>
-                        </div>
-                      </div>
+                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "28px 24px" }}>
+                    <div style={{
+                      width: 38, height: 38, borderRadius: 10, marginBottom: 14,
+                      background: isHov ? "rgba(239,68,68,0.2)" : "rgba(255,255,255,0.08)",
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      transition: "background 0.3s",
+                    }}>
+                      <Icon size={18} color={isHov ? "#f11717" : "rgba(255,255,255,0.7)"} style={{ transition: "color 0.3s" }} />
                     </div>
+                    <h3 style={{ fontSize: 20, fontWeight: 800, color: "#fff", letterSpacing: "-0.01em", marginBottom: 4 }}>{s.title}</h3>
+                    <p style={{ fontSize: 11, color: "#f11717", fontWeight: 700, letterSpacing: "0.05em", marginBottom: 10 }}>{s.sub}</p>
+                    <p style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 1.7, fontWeight: 400 }}>{s.body}</p>
                   </div>
-                ))}
-              </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+
+        <div className="hm-divider" />
+
+        {/* ── PORTFOLIO HIGHLIGHTS ───────────────────────────────────────── */}
+        <section className="hm-section">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            style={{ marginBottom: 0 }}
+          >
+            <span className="hm-label">Selected work</span>
+            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: 16 }}>
+              <h2 style={{ fontSize: "clamp(26px, 4vw, 50px)", fontWeight: 900, letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+                Every <span style={{ color: "#f11717", fontStyle: "italic" }}>frame.</span>{" "}
+                Every <span style={{ color: "#f11717", fontStyle: "italic" }}>story.</span>
+              </h2>
+              <Link to="/portfolio" style={{ textDecoration: "none" }}>
+                <motion.button
+                  whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: 8,
+                    background: "none", border: "1px solid rgba(239,68,68,0.5)",
+                    color: "#f11717", cursor: "pointer",
+                    padding: "10px 22px", borderRadius: 8,
+                    fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase",
+                    fontFamily: "Montserrat, sans-serif",
+                    transition: "all 0.25s",
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = "#f11717"; e.currentTarget.style.color = "#fff"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "none"; e.currentTarget.style.color = "#f11717"; }}
+                >
+                  View All <ChevronRight size={13} />
+                </motion.button>
+              </Link>
+            </div>
+          </motion.div>
+
+          <div className="hm-portfolio">
+            {portfolio.map((p, i) => {
+              const isHov = hoveredProject === i;
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: i * 0.07 }}
+                  onMouseEnter={() => setHoveredProject(i)}
+                  onMouseLeave={() => setHoveredProject(null)}
+                  style={{
+                    position: "relative", borderRadius: 14, overflow: "hidden",
+                    aspectRatio: i === 0 ? "4/3" : "1/1",
+                    background: "#1a1a1a", cursor: "pointer",
+                  }}
+                >
+                  <img src={p.image} alt={p.title} style={{
+                    width: "100%", height: "100%", objectFit: "cover", display: "block",
+                    transform: isHov ? "scale(1.06)" : "scale(1)",
+                    transition: "transform 0.55s ease",
+                  }} />
+                  <div style={{
+                    position: "absolute", inset: 0,
+                    background: "linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%)",
+                    opacity: isHov ? 1 : 0,
+                    transition: "opacity 0.35s",
+                  }} />
+                  <div style={{
+                    position: "absolute", bottom: 0, left: 0, right: 0, padding: "16px 16px",
+                    opacity: isHov ? 1 : 0,
+                    transform: isHov ? "translateY(0)" : "translateY(8px)",
+                    transition: "all 0.3s ease",
+                  }}>
+                    <p style={{ fontSize: 13, fontWeight: 800, color: "#fff", marginBottom: 2 }}>{p.title}</p>
+                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.55)", fontWeight: 500 }}>{p.desc}</p>
+                  </div>
+                  {/* Tag */}
+                  <div style={{
+                    position: "absolute", top: 12, left: 12,
+                    background: "rgba(255,255,255,0.08)", backdropFilter: "blur(8px)",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    borderRadius: 99, padding: "4px 10px",
+                    fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.7)",
+                    letterSpacing: "0.08em", textTransform: "uppercase",
+                    fontFamily: "Montserrat, sans-serif",
+                  }}>
+                    {p.title}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+
+        <div className="hm-divider" />
+
+        {/* ── TESTIMONIALS ──────────────────────────────────────────────── */}
+        <section className="hm-section" style={{ textAlign: "center" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="hm-label" style={{ textAlign: "center" }}>Social proof</span>
+            <h2 style={{ fontSize: "clamp(26px, 4vw, 50px)", fontWeight: 900, letterSpacing: "-0.02em", marginBottom: 52 }}>
+              Client <span style={{ color: "#f11717" }}>Stories</span>
+            </h2>
+          </motion.div>
+
+          <div style={{ maxWidth: 680, margin: "0 auto" }}>
+            {/* Stars */}
+            <div style={{ display: "flex", justifyContent: "center", gap: 4, marginBottom: 28 }}>
+              {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="#f11717" color="#f11717" />)}
             </div>
 
-            {/* Testimonial Indicators */}
-            <div className="flex justify-center space-x-3 mt-8">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentTestimonial(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${
-                    index === currentTestimonial
-                      ? "bg-red-500 scale-125"
-                      : "bg-gray-600 hover:bg-gray-500"
-                  }`}
-                />
+            {/* Sliding quote */}
+            <div style={{ overflow: "hidden", marginBottom: 28 }}>
+              <AnimatePresence mode="wait">
+                <motion.blockquote
+                  key={testimonialIdx}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -16 }}
+                  transition={{ duration: 0.4 }}
+                  style={{
+                    fontSize: "clamp(15px, 2.2vw, 20px)",
+                    fontStyle: "italic", fontWeight: 300,
+                    color: "rgba(255,255,255,0.65)",
+                    lineHeight: 1.75, margin: 0,
+                  }}
+                >
+                  "{testimonials[testimonialIdx].quote}"
+                </motion.blockquote>
+              </AnimatePresence>
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={testimonialIdx + "a"}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <p style={{ fontSize: 14, fontWeight: 800, color: "#fff", marginBottom: 4 }}>
+                  {testimonials[testimonialIdx].author}
+                </p>
+                <p style={{ fontSize: 11, color: "#f11717", fontWeight: 600, letterSpacing: "0.06em" }}>
+                  {testimonials[testimonialIdx].role}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Dots */}
+            <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 28 }}>
+              {testimonials.map((_, i) => (
+                <button key={i} onClick={() => setTestimonialIdx(i)} style={{
+                  width: i === testimonialIdx ? 22 : 6, height: 6,
+                  borderRadius: 99, border: "none", cursor: "pointer", padding: 0,
+                  background: i === testimonialIdx ? "#f11717" : "rgba(255,255,255,0.15)",
+                  transition: "all 0.3s ease",
+                }} />
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Final Call-to-Action */}
-      <section
-        id="contact"
-        className="py-24 bg-gradient-to-br from-black via-red-950 to-black"
-      >
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="space-y-8">
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-thin leading-tight">
-              <span className="block font-semibold">
-                Professionalism in every{" "}
-                <span className="font-thin text-red-500">detail.</span>
-              </span>
+        <div className="hm-divider" />
+
+        {/* ── CTA ───────────────────────────────────────────────────────── */}
+        <section style={{ textAlign: "center", padding: "80px 20px 96px", maxWidth: 760, margin: "0 auto" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <span className="hm-label" style={{ display: "block", textAlign: "center" }}>Ready?</span>
+            <h2 style={{ fontSize: "clamp(28px, 5vw, 58px)", fontWeight: 900, letterSpacing: "-0.03em", lineHeight: 1.1, marginBottom: 16 }}>
+              Professionalism in every{" "}
+              <span style={{ color: "#f11717" }}>detail.</span>
             </h2>
-
-            <p className="text-sm sm:text-3xl font-light text-gray-300 leading-relaxed">
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.32)", marginBottom: 36, lineHeight: 1.8 }}>
               Let's tell your story the IFEMedia way.
             </p>
-
-            <div className="pt-4">
-              <button
-                onClick={() => setIsBottomSheetOpen(true)}
-                className="group relative inline-flex items-center rounded-2xl space-x-4 px-8 py-3.5 bg-white text-black hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl cursor-pointer"
-              >
-                <span className="text-sm font-medium tracking-wide">
-                  Book Now
-                </span>
-                <ArrowRight className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-black border-t border-gray-800 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="flex justify-center items-center py-5">
-              <img
-                src={logo}
-                alt="IFEmedia logo"
-                className="w-30"
-                loading="eager" // Ensure logo is eagerly loaded
-                onLoad={(e) => e.target.classList.remove("blur-xs")}
-              />
-            </div>
-            <p className="text-gray-400 text-lg">
-              Premium media production • Nigeria
-            </p>
-            <div className="mt-8 pt-8 border-t border-gray-800 text-sm text-gray-500">
-              © 2025 IFEMedia. All rights reserved.
-            </div>
-          </div>
-        </div>
-      </footer>
-
-      {/* Bottom Sheet Overlay */}
-      {isBottomSheetOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-60 z-50 transition-opacity duration-300"
-          onClick={() => setIsBottomSheetOpen(false)}
-        >
-          {/* Bottom Sheet */}
-          <div
-            className={`fixed bottom-0 left-0 right-0 bg-gradient-to-b from-gray-900 to-black rounded-t-3xl shadow-2xl transform transition-transform duration-500 ease-out ${
-              isBottomSheetOpen ? "translate-y-0" : "translate-y-full"
-            }`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Handle Bar */}
-            <div className="flex justify-center pt-4 pb-2">
-              <div className="w-12 h-1.5 bg-gray-600 rounded-full"></div>
-            </div>
-
-            {/* Close Button */}
-            <button
-              onClick={() => setIsBottomSheetOpen(false)}
-              className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors duration-200"
+            <motion.button
+              onClick={() => setSheetOpen(true)}
+              whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 10,
+                background: "#f11717", color: "#fff", border: "none", cursor: "pointer",
+                padding: "15px 36px", borderRadius: 10,
+                fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase",
+                fontFamily: "Montserrat, sans-serif",
+              }}
             >
-              <X className="w-6 h-6" />
-            </button>
+              Book Now <ChevronRight size={14} />
+            </motion.button>
+          </motion.div>
+        </section>
 
-            {/* Content */}
-            <div className="px-6 py-8 pb-12">
-              <h3 className="text-2xl font-semibold text-center mb-2">
-                Get in <span className="text-red-500">Touch</span>
+        {/* ── FOOTER ────────────────────────────────────────────────────── */}
+        <footer className="hm-footer">
+          <img src={logo} alt="IFEMedia logo" style={{ height: 52, objectFit: "contain", marginBottom: 14 }} />
+          <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", fontWeight: 500, letterSpacing: "0.08em", marginBottom: 28 }}>
+            Premium media production · Nigeria
+          </p>
+          <div style={{ height: 1, background: "rgba(255,255,255,0.07)", maxWidth: 400, margin: "0 auto 24px" }} />
+          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.18)", fontWeight: 500 }}>
+            © 2025 IFEMedia. All rights reserved.
+          </p>
+        </footer>
+
+      </div>
+
+      {/* ── BOTTOM SHEET ──────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {sheetOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSheetOpen(false)}
+            style={{
+              position: "fixed", inset: 0, zIndex: 200,
+              background: "rgba(0,0,0,0.85)", backdropFilter: "blur(10px)",
+              display: "flex", alignItems: "flex-end",
+            }}
+          >
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 280 }}
+              onClick={e => e.stopPropagation()}
+              style={{
+                width: "100%", background: "#141414",
+                borderTop: "1px solid rgba(255,255,255,0.08)",
+                borderRadius: "20px 20px 0 0",
+                padding: "28px 24px 52px",
+                fontFamily: "Montserrat, sans-serif",
+                position: "relative",
+              }}
+            >
+              <div style={{ width: 40, height: 4, borderRadius: 99, background: "rgba(255,255,255,0.1)", margin: "0 auto 28px" }} />
+
+              <button
+                onClick={() => setSheetOpen(false)}
+                style={{ position: "absolute", top: 20, right: 20, background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.3)", padding: 4 }}
+                onMouseEnter={e => e.currentTarget.style.color = "#fff"}
+                onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.3)"}
+              >
+                <X size={18} />
+              </button>
+
+              <h3 style={{ fontSize: 20, fontWeight: 800, textAlign: "center", color: "#fff", marginBottom: 6, letterSpacing: "-0.02em" }}>
+                Get in <span style={{ color: "#f11717" }}>Touch</span>
               </h3>
-              <p className="text-gray-400 text-center mb-8 text-sm">
+              <p style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", textAlign: "center", marginBottom: 28 }}>
                 Choose your preferred way to reach us
               </p>
 
-              {/* Contact Options */}
-              <div className="space-y-4 max-w-md mx-auto">
-                {/* Email Option */}
-                <button
-                  onClick={handleEmailClick}
-                  className="w-full group flex items-center space-x-4 p-5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-red-500/25"
+              <div style={{ maxWidth: 440, margin: "0 auto", display: "flex", flexDirection: "column", gap: 12 }}>
+                <motion.button
+                  whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                  onClick={handleEmail}
+                  style={{ display: "flex", alignItems: "center", gap: 16, background: "#f11717", border: "none", cursor: "pointer", padding: "18px 22px", borderRadius: 14, width: "100%", fontFamily: "Montserrat, sans-serif" }}
                 >
-                  <div className="flex-shrink-0 w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                    <Mail className="w-6 h-6 text-white" />
+                  <div style={{ width: 42, height: 42, borderRadius: "50%", background: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <Mail size={18} color="#fff" />
                   </div>
-                  <div className="flex-1 text-left">
-                    <div className="text-white font-semibold text-lg">
-                      Email Us
-                    </div>
-                    <div className="text-red-100 text-sm">
-                      IFEmedia.ng@gmail.com
-                    </div>
+                  <div style={{ textAlign: "left", flex: 1 }}>
+                    <p style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 2 }}>Email Us</p>
+                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>IFEmedia.ng@gmail.com</p>
                   </div>
-                  <ArrowRight className="w-5 h-5 text-white transition-transform duration-300 group-hover:translate-x-1" />
-                </button>
+                  <ChevronRight size={15} color="rgba(255,255,255,0.5)" />
+                </motion.button>
 
-                {/* WhatsApp Option */}
-                <button
-                  onClick={handleWhatsAppClick}
-                  className="w-full group flex items-center space-x-4 p-5 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-green-500/25"
+                <motion.button
+                  whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                  onClick={handleWA}
+                  style={{ display: "flex", alignItems: "center", gap: 16, background: "#16a34a", border: "none", cursor: "pointer", padding: "18px 22px", borderRadius: 14, width: "100%", fontFamily: "Montserrat, sans-serif" }}
                 >
-                  <div className="flex-shrink-0 w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                    <MessageCircle className="w-6 h-6 text-white" />
+                  <div style={{ width: 42, height: 42, borderRadius: "50%", background: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <MessageCircle size={18} color="#fff" />
                   </div>
-                  <div className="flex-1 text-left">
-                    <div className="text-white font-semibold text-lg">
-                      WhatsApp
-                    </div>
-                    <div className="text-green-100 text-sm">
-                      +234 810 672 8018
-                    </div>
+                  <div style={{ textAlign: "left", flex: 1 }}>
+                    <p style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 2 }}>WhatsApp</p>
+                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>+234 810 672 8018</p>
                   </div>
-                  <ArrowRight className="w-5 h-5 text-white transition-transform duration-300 group-hover:translate-x-1" />
-                </button>
+                  <ChevronRight size={15} color="rgba(255,255,255,0.5)" />
+                </motion.button>
               </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
