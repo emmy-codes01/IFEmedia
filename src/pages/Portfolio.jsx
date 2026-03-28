@@ -40,9 +40,21 @@ import n11 from "../assets/images/Display/Nige/n11.png"
 import n12 from "../assets/images/Display/Nige/n12.png"
 
 
+// Blockfest Images
+import bf   from "../assets/images/brands/bf.JPG"
+
+
 const events = [
   {
     id: 1,
+    title: 'BLOCKFEST Africa',
+    tag: 'Full Media Coverage',
+    year: '2025',
+    cover: bf,
+    images: [],
+  },
+  {
+    id: 2,
     title: 'NIGE',
     tag: 'Full Media Coverage',
     year: '2025',
@@ -50,7 +62,7 @@ const events = [
     images: [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12],
   },
   {
-    id: 2,
+    id: 3,
     title: 'Stablecoin Summit Africa',
     tag: 'Full Media Coverage',
     year: '2025',
@@ -58,7 +70,7 @@ const events = [
     images: [s1, s2, s3, s4, s5, s6, s7, s8, s9, s10],
   },
   {
-    id: 3,
+    id: 4,
     title: 'Technova',
     tag: 'Full Media Coverage',
     year: '2026',
