@@ -63,9 +63,9 @@ const testimonials = [
 ];
 
 const stats = [
-  { icon: Users, number: '500+', label: 'Happy Clients' },
-  { icon: Camera, number: '1000+', label: 'Projects Completed' },
-  { icon: Award, number: '50+', label: 'Awards Won' },
+  { icon: Users, number: '50+', label: 'Happy Clients' },
+  { icon: Camera, number: '500+', label: 'Projects Completed' },
+  { icon: Award, number: '10+', label: 'Awards Won' },
 ];
 
 const clients = [

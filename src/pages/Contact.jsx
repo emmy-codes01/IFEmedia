@@ -15,7 +15,7 @@ const contactCards = [
   { icon: Phone,         title: "Call Us",    detail: "+234 810 672 8018",    href: "tel:+2348106728018" },
   { icon: Mail,          title: "Email",      detail: "IFEmedia.ng@gmail.com", href: "mailto:IFEmedia.ng@gmail.com" },
   { icon: MessageCircle, title: "WhatsApp",   detail: "Chat with us",          href: "https://wa.me/2348106728018" },
-  { icon: MapPin,        title: "Location",   detail: "Ikeja, Lagos, Nigeria", href: null },
+  // { icon: MapPin,        title: "Location",   detail: "Ikeja, Lagos, Nigeria", href: null },
 ];
 
 export default function Contact() {

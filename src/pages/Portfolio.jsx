@@ -41,8 +41,35 @@ import n12 from "../assets/images/Display/Nige/n12.png"
 
 
 // Blockfest Images
-import bf   from "../assets/images/brands/bf.JPG"
-
+import bf from "../assets/images/brands/bf.JPG"
+import b1 from "../assets/images/Display/Blockfest/b1.png"
+import b2 from "../assets/images/Display/Blockfest/b2.png"
+import b3 from "../assets/images/Display/Blockfest/b3.png"
+import b4 from "../assets/images/Display/Blockfest/b4.png"
+import b5 from "../assets/images/Display/Blockfest/b5.png"
+import b6 from "../assets/images/Display/Blockfest/b6.png"
+import b7 from "../assets/images/Display/Blockfest/b7.png"
+import b8 from "../assets/images/Display/Blockfest/b8.png"
+import b9 from "../assets/images/Display/Blockfest/b9.png"
+import b10 from "../assets/images/Display/Blockfest/b10.png"
+import b11 from "../assets/images/Display/Blockfest/b11.png"
+import b12 from "../assets/images/Display/Blockfest/b12.png"
+import b13 from "../assets/images/Display/Blockfest/b13.png"
+import b14 from "../assets/images/Display/Blockfest/b14.png"
+import b15 from "../assets/images/Display/Blockfest/b15.png"
+import b16 from "../assets/images/Display/Blockfest/b16.png"
+import b17 from "../assets/images/Display/Blockfest/b17.png"
+import b18 from "../assets/images/Display/Blockfest/b18.png"
+import b20 from "../assets/images/Display/Blockfest/b20.png"
+import b21 from "../assets/images/Display/Blockfest/b21.png"
+import b22 from "../assets/images/Display/Blockfest/b22.png"
+import b23 from "../assets/images/Display/Blockfest/b23.png"
+import b24 from "../assets/images/Display/Blockfest/b24.png"
+import b25 from "../assets/images/Display/Blockfest/b25.png"
+import b26 from "../assets/images/Display/Blockfest/b26.png"
+import b27 from "../assets/images/Display/Blockfest/b27.png"
+import b28 from "../assets/images/Display/Blockfest/b28.png"
+import b29 from "../assets/images/Display/Blockfest/b29.png"
 
 const events = [
   {
@@ -51,7 +78,7 @@ const events = [
     tag: 'Full Media Coverage',
     year: '2025',
     cover: bf,
-    images: [],
+    images: [b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b15, b16, b17, b18, b20, b21, b22, b23, b24, b25, b26, b27, b28, b29],
   },
   {
     id: 2,
@@ -229,17 +256,17 @@ const EventDetail = ({ event, onClose }) => {
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 20 }}
+        exit={{ opacity: 0, y: 20 }}  
         transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
         style={{
-          position: 'fixed', inset: 0, zIndex: 100,
+          position: 'fixed', inset: 0, zIndex: 9500,
           background: '#0d0d0d', overflowY: 'auto',
           fontFamily: 'Montserrat, sans-serif',
         }}
       >
         {/* Sticky nav */}
         <div style={{
-          position: 'sticky', top: 0, zIndex: 10,
+          position: 'sticky', top: 0, zIndex: 9510,
           background: 'rgba(13,13,13,0.92)', backdropFilter: 'blur(14px)',
           borderBottom: '1px solid rgba(255,255,255,0.07)',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
